@@ -1,10 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,10 +20,10 @@ function Login() {
       });
 
       console.log("Login successful:", response.data);
-      alert(`Welcome, ${response.data.client.full_name}!`);
+      navigate("/dashboard");
     } catch(err) {
       console.error(err);
-      setError("Invalid email or password");
+      setError("Correo electrónico o contraseña incorrectos");
     }
   };
 
@@ -37,7 +40,7 @@ function Login() {
           <p className="text-red-500 text-sm text-center mb-4">{error}</p>
         )}
 
-        <label className="block text-sm text-gray-600 mb-1">Email</label>
+        <label className="block text-sm text-gray-600 mb-1">Correo electrónico</label>
         <input
           type="email"
           value={email}
@@ -45,7 +48,7 @@ function Login() {
           className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:ring-2 focus:ring-[#C9A84C]"
         />
 
-        <label className="block text-sm text-gray-600 mb-1">Password</label>
+        <label className="block text-sm text-gray-600 mb-1">Contraseña</label>
         <input
           type="password"
           value={password}
@@ -57,7 +60,7 @@ function Login() {
           type="submit"
           className="w-full bg-[#1B4F72] text-white py-2 rounded hover:bg-[#163f5c] transition"
         >
-          Log in
+          Iniciar sesión
         </button>
       </form>
     </div>
