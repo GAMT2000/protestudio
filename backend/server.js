@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const appointmentsRoutes = require("./routes/appointments");
+const clientRoutes = require("./routes/clients");
+const orderRoutes = require("./routes/orders");
 require("dotenv").config();
 
 const app = express();
@@ -10,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/appointments", appointmentsRoutes);
+app.use("/api/clients", clientRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/", (req, res) => {
   res.send("Protestudio backend is running");
