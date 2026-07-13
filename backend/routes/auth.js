@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     const { full_name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const [result] = await db.query(
-      "INSERT INTO clients (full_name, email, password) VALUES (?, ?, ?)",
+      "INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)",
       [full_name, email, hashedPassword],
     );
 
@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const [rows] = await db.query("SELECT * FROM clients WHERE email = ?", [
+    const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
 
@@ -32,8 +32,8 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    const client = rows[0];
-    const isMatch = await bcrypt.compare(password, client.password);
+    const user = rows[0];
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid email or password" });
@@ -41,11 +41,7 @@ router.post("/login", async (req, res) => {
 
     res.json({
       message: "Login successful",
-      client: {
-        id: client.id,
-        full_name: client.full_name,
-        email: client.email,
-      },
+      user: { id: user.id, full_name: user.full_name, email: user.email },
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

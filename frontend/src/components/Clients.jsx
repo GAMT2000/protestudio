@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 
 function Clients() {
     const [clients, setClients] = useState([]);

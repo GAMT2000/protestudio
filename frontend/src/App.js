@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/login";
-import Dashboard from "./components/dashboard";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 import Appointments from "./components/Appointments";
 import Clients from "./components/Clients";
 import Orders from "./components/Orders";
+import Supplies from "./components/Supplies";
+import Billing from "./components/Billing";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/appointments" element={<Appointments/>} />
         <Route path="/clients" element={<Clients/>} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/supplies" element={<Supplies />} />
+        <Route path="/billing" element={<Billing />} />
       </Routes>
     </BrowserRouter>
   );
