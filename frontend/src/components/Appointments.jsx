@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -23,7 +24,15 @@ function Appointments() {
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-8 bg-[#F5F0EB] min-h-screen">
-        <h1 className="text-2xl font-bold text-[#1B4F72] mb-6">Citas</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-[#1B4F72]">Citas</h1>
+          <Link
+            to="/appointments/add"
+            className="bg-[#1B4F72] text-white px-4 py-2 rounded hover:bg-[#163f5c] transition"
+          >
+            + Agregar Cita
+          </Link>
+        </div>
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <table className="w-full text-left">
             <thead className="bg-[#1B4F72] text-white">

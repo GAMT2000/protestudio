@@ -6,6 +6,8 @@ import Clients from "./components/Clients";
 import Orders from "./components/Orders";
 import Supplies from "./components/Supplies";
 import Billing from "./components/Billing";
+import AddClient from "./components/AddClient";
+import AddAppointment from "./components/AddAppointments";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/supplies" element={<Supplies />} />
         <Route path="/billing" element={<Billing />} />
+        <Route path="/clients/add" element={<AddClient />} />
+        <Route path="/appointments/add" element={<AddAppointment />} />
       </Routes>
     </BrowserRouter>
   );
