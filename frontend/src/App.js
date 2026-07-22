@@ -8,6 +8,8 @@ import Supplies from "./components/Supplies";
 import Billing from "./components/Billing";
 import AddClient from "./components/AddClient";
 import AddAppointment from "./components/AddAppointments";
+import AddOrder from "./components/AddOrder";
+import AddBilling from "./components/AddBilling";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/billing" element={<Billing />} />
         <Route path="/clients/add" element={<AddClient />} />
         <Route path="/appointments/add" element={<AddAppointment />} />
+        <Route path="/orders/add" element={<AddOrder />} />
+        <Route path="/billing/add" element={<AddBilling />} />
       </Routes>
     </BrowserRouter>
   );

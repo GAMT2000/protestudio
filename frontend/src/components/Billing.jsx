@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
 
 function Billing() {
   const [payments, setPayments] = useState([]);
@@ -9,10 +10,14 @@ function Billing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const paymentsResponse = await axios.get("http://localhost:5000/api/billing");
+        const paymentsResponse = await axios.get(
+          "http://localhost:5000/api/billing",
+        );
         setPayments(paymentsResponse.data);
 
-        const summaryResponse = await axios.get("http://localhost:5000/api/billing/summary/monthly");
+        const summaryResponse = await axios.get(
+          "http://localhost:5000/api/billing/summary/monthly",
+        );
         setSummary(summaryResponse.data);
       } catch (err) {
         console.error(err);
@@ -27,15 +32,23 @@ function Billing() {
       <Sidebar />
 
       <div className="flex-1 p-8 bg-[#F5F0EB] min-h-screen">
-        <h1 className="text-2xl font-bold text-[#1B4F72] mb-6">
-          Facturación
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-[#1B4F72]">Facturación</h1>
+          <Link
+            to="/billing/add"
+            className="bg-[#1B4F72] text-white px-4 py-2 rounded hover:bg-[#163f5c] transition"
+          >
+            + Registrar Pago
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {summary.map((row) => (
             <div key={row.month} className="bg-white rounded-lg shadow-md p-6">
               <p className="text-gray-500 text-sm mb-2">{row.month}</p>
-              <p className="text-3xl font-bold text-[#1B4F72]">S/. {row.total}</p>
+              <p className="text-3xl font-bold text-[#1B4F72]">
+                S/. {row.total}
+              </p>
             </div>
           ))}
         </div>
@@ -58,7 +71,10 @@ function Billing() {
                   <td className="px-4 py-3">S/. {payment.amount}</td>
                   <td className="px-4 py-3">{payment.payment_method}</td>
                   <td className="px-4 py-3">
-                    {new Date(payment.payment_date).toLocaleDateString("es-PE", { timeZone: "UTC" })}
+                    {new Date(payment.payment_date).toLocaleDateString(
+                      "es-PE",
+                      { timeZone: "UTC" },
+                    )}
                   </td>
                   <td className="px-4 py-3">{payment.description || "-"}</td>
                 </tr>

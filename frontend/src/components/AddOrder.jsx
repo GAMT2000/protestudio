@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import ClientSearchSelect from "./ClientSearchSelect";
 
-function AddAppointment() {
+function AddOrder() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     client_id: "",
-    appointment_date: "",
-    appointment_time: "",
-    type: "",
-    notes: "",
+    supplier: "",
+    item_description: "",
+    order_date: "",
+    expected_delivery: "",
+    cost: "",
   });
 
   const handleChange = (e) => {
@@ -25,11 +26,11 @@ function AddAppointment() {
     setError("");
 
     try {
-      await axios.post("http://localhost:5000/api/appointments", formData);
-      navigate("/appointments");
+      await axios.post("http://localhost:5000/api/orders", formData);
+      navigate("/orders");
     } catch (err) {
       console.error(err);
-      setError("Ocurrió un error al crear la cita");
+      setError("Ocurrió un error al crear el pedido");
     }
   };
 
@@ -38,57 +39,69 @@ function AddAppointment() {
       <Sidebar />
 
       <div className="flex-1 p-8 bg-[#F5F0EB] min-h-screen">
-        <h1 className="text-2xl font-bold text-[#1B4F72] mb-6">Agregar Cita</h1>
+        <h1 className="text-2xl font-bold text-[#1B4F72] mb-6">
+          Agregar Pedido
+        </h1>
 
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-md max-w-xl"
         >
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm mb-4">{error}</p>
+          )}
 
           <ClientSearchSelect
             onSelect={(id) => setFormData((previousFormData) => ({ ...previousFormData, client_id: id }))}
           />
 
-          <label className="block text-sm text-gray-600 mb-1">Fecha</label>
+          <label className="block text-sm text-gray-600 mb-1">Proveedor</label>
+          <input
+            type="text"
+            name="supplier"
+            value={formData.supplier}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
+          />
+
+          <label className="block text-sm text-gray-600 mb-1">Descripción del artículo</label>
+          <input
+            type="text"
+            name="item_description"
+            value={formData.item_description}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
+          />
+
+          <label className="block text-sm text-gray-600 mb-1">Fecha de pedido</label>
           <input
             type="date"
-            name="appointment_date"
-            value={formData.appointment_date}
+            name="order_date"
+            value={formData.order_date}
             onChange={handleChange}
             required
             className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
           />
 
-          <label className="block text-sm text-gray-600 mb-1">Hora</label>
+          <label className="block text-sm text-gray-600 mb-1">Entrega esperada</label>
           <input
-            type="time"
-            name="appointment_time"
-            value={formData.appointment_time}
+            type="date"
+            name="expected_delivery"
+            value={formData.expected_delivery}
             onChange={handleChange}
-            required
             className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
           />
 
-          <label className="block text-sm text-gray-600 mb-1">Tipo</label>
-          <select
-            name="type"
-            value={formData.type}
+          <label className="block text-sm text-gray-600 mb-1">Costo (S/.)</label>
+          <input
+            type="number"
+            step="0.01"
+            name="cost"
+            value={formData.cost}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-          >
-            <option value="">Seleccione un tipo</option>
-            <option value="Nuevo cliente">Nuevo cliente</option>
-            <option value="Mantenimiento">Mantenimiento</option>
-          </select>
-
-          <label className="block text-sm text-gray-600 mb-1">Notas</label>
-          <textarea
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            rows="3"
             className="w-full border border-gray-300 rounded px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
           />
 
@@ -96,7 +109,7 @@ function AddAppointment() {
             type="submit"
             className="w-full bg-[#1B4F72] text-white py-2 rounded hover:bg-[#163f5c] transition"
           >
-            Guardar Cita
+            Guardar Pedido
           </button>
         </form>
       </div>
@@ -104,4 +117,4 @@ function AddAppointment() {
   );
 }
 
-export default AddAppointment;
+export default AddOrder;

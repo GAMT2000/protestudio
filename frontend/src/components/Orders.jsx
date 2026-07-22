@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -23,9 +24,15 @@ function Orders() {
       <Sidebar />
 
       <div className="flex-1 p-8 bg-[#F5F0EB] min-h-screen">
-        <h1 className="text-2xl font-bold text-[#1B4F72] mb-6">
-          Pedidos
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-[#1B4F72]">Pedidos</h1>
+          <Link
+            to="/orders/add"
+            className="bg-[#1B4F72] text-white px-4 py-2 rounded hover:bg-[#163f5c] transition"
+          >
+            + Agregar Pedido
+          </Link>
+        </div>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <table className="w-full text-left">
@@ -47,11 +54,16 @@ function Orders() {
                   <td className="px-4 py-3">{order.supplier}</td>
                   <td className="px-4 py-3">{order.item_description}</td>
                   <td className="px-4 py-3">
-                    {new Date(order.order_date).toLocaleDateString("es-PE", { timeZone: "UTC" })}
+                    {new Date(order.order_date).toLocaleDateString("es-PE", {
+                      timeZone: "UTC",
+                    })}
                   </td>
                   <td className="px-4 py-3">
                     {order.expected_delivery
-                      ? new Date(order.expected_delivery).toLocaleDateString("es-PE", { timeZone: "UTC" })
+                      ? new Date(order.expected_delivery).toLocaleDateString(
+                          "es-PE",
+                          { timeZone: "UTC" },
+                        )
                       : "-"}
                   </td>
                   <td className="px-4 py-3">S/. {order.cost}</td>
